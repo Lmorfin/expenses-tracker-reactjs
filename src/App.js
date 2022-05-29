@@ -1,7 +1,9 @@
 import ExpenseItems from "./components/Expenses/ExpenseItems";
 import NewExpense from "./components/NewExpenses/NewExpense";
-const App = () => {
-  const expenses = [
+import React, { useState } from "react";
+
+
+  const sampleExpenses = [
     {
       id: "e1",
       title: "Toilet Paper",
@@ -23,16 +25,23 @@ const App = () => {
     },
   ];
 
+const App = () => {
+
+   const [enteredExpense, setEnteredExpense] = useState(sampleExpenses);
+
+
   const addExpenseHandler = (expense) => {
-    console.log('In App.js');
-    console.log(expense);
+    setEnteredExpense(prevExpenses => {
+      //we get expense's values, then we add our prev expenses in. using spread ...
+      return [expense, ...prevExpenses];
+    });
   };
 
   /* jsx code */
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <ExpenseItems items={expenses} />
+      <ExpenseItems items={enteredExpense} />
     </div>
   );
 
